@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'com.vaadin' version '0.14.6.0'
 	id 'java'
+	id 'com.google.cloud.tools.jib' version '3.2.0'
 }
 
 group = 'com.standardcode'
@@ -43,3 +44,13 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jib {
+	container {
+		jvmFlags = ['-Xms512m', '-Xdebug']
+		mainClass = 'com.standardcode.springdemo.SpringdemoApplication'
+		args = []
+		ports = ['8080/tcp']
+	}
+}
+jib.to.image = 'spring-demo-app'
